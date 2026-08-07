@@ -1,0 +1,38 @@
+graph TD
+    %% Global Nodes
+    Start([Mulai]) --> Login{Autentikasi User}
+
+    %% Role Selection
+    Login -->|Role: Admin| AdminDash[Dashboard Admin]
+    Login -->|Role: Guru| GuruDash[Dashboard Guru]
+    Login -->|Role: Siswa| SiswaDash[Dashboard Siswa]
+
+    %% Admin Flow
+    AdminDash --> AdminUser[Kelola Data Guru & Siswa]
+    AdminDash --> AdminMapel[Kelola Mata pelajaran]
+    AdminMapel --> AdminAkademik[Kelola Tahun Ajaran & Kelas]
+    AdminAkademik --> AdminPlotting[Plotting Guru Mapel & Wali Kelas]
+
+    %% Guru Flow
+    GuruDash --> GuruKelas[Akses Kelas & Mapel Binaan]
+    GuruKelas --> GuruTugas[Kelola Tugas & Batas Waktu]
+    GuruKelas --> GuruNilai[Koreksi & Input Nilai Tugas/Ujian]
+    GuruNilai --> GuruRapor[Input Komponen Nilai Rapor: Pengetahuan & Keterampilan]
+
+    %% Siswa Flow
+    SiswaDash --> SiswaKelas[Lihat Kelas & Materi]
+    SiswaKelas --> SiswaTugas[Unduh/Lihat Tugas]
+    SiswaTugas --> SiswaSubmit[Upload Lembar Kerja]
+
+    %% Integration to E-Rapor
+    SiswaSubmit --> GuruNilai
+    GuruRapor --> RaporEngine{Kalkulasi Nilai Akhir}
+
+    %% Wali Kelas & Finalisasi
+    AdminPlotting -->|Jika Guru = Wali Kelas| WaliRapor[Input Catatan Wali Kelas & Absensi]
+    RaporEngine --> WaliRapor
+    WaliRapor --> RaporLock[Kunci Rapor oleh Admin]
+
+    %% Output
+    RaporLock --> CetakRapor[Siswa/Orang Tua Lihat & Unduh E-Rapor PDF]
+    CetakRapor --> End([Selesai])

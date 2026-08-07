@@ -1,0 +1,81 @@
+graph TD
+    %% Root Node
+    APP["app/ (Root Domain)"]
+
+    %% Public Routes
+    subgraph Public ["Public / Auth Routes"]
+        HOME["/ (Landing Page)"]
+        SIGNIN["/sign-in (Clerk)"]
+        SIGNUP["/sign-up (Clerk)"]
+    end
+
+    %% Admin Route Group
+    subgraph AdminGroup ["app/(dashboard)/admin/"]
+        ADM_DASH["/admin (Overview)"]
+        ADM_USERS["/admin/users (Kelola User)"]
+        ADM_SUBJ["/admin/subjects (Kelola Mapel)"]
+        ADM_YEARS["/admin/academic-years (Tahun Ajaran)"]
+        ADM_CLASSES["/admin/classes (Kelola Kelas)"]
+        ADM_CLASS_DET["/admin/classes/[classId] (Detail & Join Code)"]
+        ADM_RAPOR["/admin/rapor (Daftar Rapor)"]
+        ADM_RAPOR_LOCK["/admin/rapor/[academicYearId] (Kunci Rapor)"]
+    end
+
+    %% Guru Route Group
+    subgraph GuruGroup ["app/(dashboard)/guru/"]
+        GURU_DASH["/guru (Overview)"]
+        GURU_CLASSES["/guru/classes (Daftar Kelas Binaan)"]
+        GURU_JOIN["/guru/classes/join (Claim Join Code)"]
+        GURU_SUBJ["/guru/classes/[classSubjectId] (Detail Mapel)"]
+        GURU_ASSIGN[".../assignments (Daftar Tugas)"]
+        GURU_ASSIGN_NEW[".../assignments/create (Buat Tugas)"]
+        GURU_ASSIGN_DET[".../assignments/[assignmentId] (Koreksi)"]
+        GURU_RAPOR_COMP[".../rapor-components (Nilai Mapel)"]
+        GURU_HOME["/guru/homeroom/[classId] (Input Wali Kelas)"]
+    end
+
+    %% Siswa Route Group
+    subgraph SiswaGroup ["app/(dashboard)/siswa/"]
+        SISWA_DASH["/siswa (Overview)"]
+        SISWA_CLASSES["/siswa/classes (Daftar Kelas)"]
+        SISWA_JOIN["/siswa/classes/join (Self Enrollment)"]
+        SISWA_SUBJ["/siswa/classes/[classSubjectId] (Detail Mapel)"]
+        SISWA_ASSIGN_DET[".../assignments/[assignmentId] (Upload Tugas)"]
+        SISWA_RAPOR["/siswa/rapor (Daftar E-Rapor)"]
+        SISWA_RAPOR_VIEW["/siswa/rapor/[academicYearId] (View/Print PDF)"]
+    end
+
+    %% App Connections
+    APP --> HOME
+    APP --> SIGNIN
+    APP --> SIGNUP
+
+    %% Admin Connections
+    APP --> ADM_DASH
+    ADM_DASH --> ADM_USERS
+    ADM_DASH --> ADM_SUBJ
+    ADM_DASH --> ADM_YEARS
+    ADM_DASH --> ADM_CLASSES
+    ADM_CLASSES --> ADM_CLASS_DET
+    ADM_DASH --> ADM_RAPOR
+    ADM_RAPOR --> ADM_RAPOR_LOCK
+
+    %% Guru Connections
+    APP --> GURU_DASH
+    GURU_DASH --> GURU_CLASSES
+    GURU_CLASSES --> GURU_JOIN
+    GURU_CLASSES --> GURU_SUBJ
+    GURU_SUBJ --> GURU_ASSIGN
+    GURU_ASSIGN --> GURU_ASSIGN_NEW
+    GURU_ASSIGN --> GURU_ASSIGN_DET
+    GURU_SUBJ --> GURU_RAPOR_COMP
+    GURU_DASH --> GURU_HOME
+
+    %% Siswa Connections
+    APP --> SISWA_DASH
+    SISWA_DASH --> SISWA_CLASSES
+    SISWA_CLASSES --> SISWA_JOIN
+    SISWA_CLASSES --> SISWA_SUBJ
+    SISWA_SUBJ --> SISWA_ASSIGN_DET
+    SISWA_DASH --> SISWA_RAPOR
+    SISWA_RAPOR --> SISWA_RAPOR_VIEW

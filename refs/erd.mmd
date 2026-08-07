@@ -1,0 +1,102 @@
+classDiagram
+    class USERS {
+        +int id PK
+        +string name
+        +string email Unique
+        +string password
+        +enum role
+        +datetime created_at
+    }
+
+    class ACADEMIC_YEARS {
+        +int id PK
+        +string year
+        +enum semester
+        +boolean is_active
+    }
+
+    class SUBJECTS {
+        +int id PK
+        +string name
+        +string code Unique
+    }
+
+    class CLASSES {
+        +int id PK
+        +string name
+        +int academic_year_id FK
+        +int homeroom_teacher_id FK
+        +string homeroom_teacher_join_code Optional
+        +string student_teacher_join_code Optional
+    }
+
+    class CLASS_STUDENTS {
+        +int id PK
+        +int class_id FK
+        +int student_id FK
+    }
+
+    class CLASS_SUBJECTS {
+        +int id PK
+        +int class_id FK
+        +int subject_id FK
+        +int teacher_id FK
+        +string subject_teacher_join_code Optional
+    }
+
+    class ASSIGNMENTS {
+        +int id PK
+        +int class_subject_id FK
+        +string slug
+        +string title
+        +text description
+        +string additional_note
+        +string[] external_references
+        +datetime due_date
+    }
+
+    class SUBMISSIONS {
+        +int id PK
+        +int assignment_id FK
+        +int student_id FK
+        +string file_path
+        +float grade
+        +text feedback
+        +datetime submitted_at
+    }
+
+    class RAPOR_COMPONENTS {
+        +int id PK
+        +int class_subject_id FK
+        +int student_id FK
+        +float knowledge_score
+        +float skill_score
+        +float final_score
+    }
+
+    class RAPOR_FINALS {
+        +int id PK
+        +int student_id FK
+        +int academic_year_id FK
+        +int attendance_sick
+        +int attendance_permission
+        +int attendance_alpha
+        +text behavior_note
+        +boolean is_locked
+    }
+
+    %% Hubungan Hirarki dan Asosiasi Kelas
+    ACADEMIC_YEARS "1" --> "*" CLASSES : has
+    USERS "1" --> "*" CLASSES : manages_as_homeroom
+    CLASSES "1" --> "*" CLASS_STUDENTS : contains
+    USERS "1" --> "*" CLASS_STUDENTS : enrolled_as_student
+    CLASSES "1" --> "*" CLASS_SUBJECTS : has
+    SUBJECTS "1" --> "*" CLASS_SUBJECTS : assigned_to
+    USERS "1" --> "*" CLASS_SUBJECTS : teaches
+    CLASS_SUBJECTS "1" --> "*" ASSIGNMENTS : contains
+    ASSIGNMENTS "1" --> "*" SUBMISSIONS : receives
+    USERS "1" --> "*" SUBMISSIONS : submits
+    CLASS_SUBJECTS "1" --> "*" RAPOR_COMPONENTS : scored_in
+    USERS "1" --> "*" RAPOR_COMPONENTS : receives_grade
+    USERS "1" --> "1" RAPOR_FINALS : owns
+    ACADEMIC_YEARS "1" --> "*" RAPOR_FINALS : belongs_to

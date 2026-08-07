@@ -1,0 +1,175 @@
+// LMS & E-Rapor schema. UUIDv7 PKs (time-ordered), Clerk-synced users.
+// See refs/erd.mmd for the domain diagram.
+
+generator client {
+  provider = "prisma-client"
+  output   = "../app/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  // Prisma 7: connection URLs live in prisma.config.ts (migrate) and the PrismaClient adapter (runtime).
+}
+
+enum Role {
+  ADMIN
+  GURU
+  SISWA
+}
+
+enum Semester {
+  GANJIL
+  GENAP
+}
+
+// Teacher self-registration is admin-reviewed; students are approved instantly.
+enum TeacherRequestStatus {
+  NONE
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+model User {
+  id                   String               @id @default(uuid(7))
+  clerkId              String               @unique
+  name                 String
+  email                String               @unique
+  role                 Role                 @default(SISWA)
+  onboarded            Boolean              @default(false)
+  teacherRequestStatus TeacherRequestStatus @default(NONE)
+  createdAt            DateTime             @default(now())
+
+  homeroomClasses Class[]          @relation("HomeroomTeacher")
+  enrollments     ClassStudent[]
+  taughtSubjects  ClassSubject[]
+  submissions     Submission[]
+  raporComponents RaporComponent[]
+  raporFinals     RaporFinal[]
+}
+
+model AcademicYear {
+  id       String   @id @default(uuid(7))
+  year     String
+  semester Semester
+  isActive Boolean  @default(false)
+
+  classes     Class[]
+  raporFinals RaporFinal[]
+
+  @@unique([year, semester])
+}
+
+model Subject {
+  id   String @id @default(uuid(7))
+  name String
+  code String @unique
+
+  classSubjects ClassSubject[]
+}
+
+model Class {
+  id                String  @id @default(uuid(7))
+  name              String
+  academicYearId    String
+  homeroomTeacherId String?
+  homeroomJoinCode  String? @unique
+  studentJoinCode   String? @unique
+
+  academicYear    AcademicYear @relation(fields: [academicYearId], references: [id], onDelete: Cascade)
+  homeroomTeacher User?        @relation("HomeroomTeacher", fields: [homeroomTeacherId], references: [id], onDelete: SetNull)
+
+  students      ClassStudent[]
+  classSubjects ClassSubject[]
+}
+
+model ClassStudent {
+  id        String @id @default(uuid(7))
+  classId   String
+  studentId String
+
+  class   Class @relation(fields: [classId], references: [id], onDelete: Cascade)
+  student User  @relation(fields: [studentId], references: [id], onDelete: Cascade)
+
+  @@unique([classId, studentId])
+}
+
+model ClassSubject {
+  id              String  @id @default(uuid(7))
+  classId         String
+  subjectId       String
+  teacherId       String?
+  teacherJoinCode String? @unique
+  TimeStart       String
+  TimeEnd         String
+
+  class   Class   @relation(fields: [classId], references: [id], onDelete: Cascade)
+  subject Subject @relation(fields: [subjectId], references: [id], onDelete: Cascade)
+  teacher User?   @relation(fields: [teacherId], references: [id], onDelete: SetNull)
+
+  assignments     Assignment[]
+  raporComponents RaporComponent[]
+
+  @@unique([classId, subjectId])
+}
+
+model Assignment {
+  id                 String    @id @default(uuid(7))
+  classSubjectId     String
+  slug               String
+  title              String
+  description        String?
+  additionalNote     String?
+  externalReferences String[]
+  dueDate            DateTime?
+
+  classSubject ClassSubject @relation(fields: [classSubjectId], references: [id], onDelete: Cascade)
+  submissions  Submission[]
+
+  @@unique([classSubjectId, slug])
+}
+
+model Submission {
+  id           String   @id @default(uuid(7))
+  assignmentId String
+  studentId    String
+  filePath     String
+  grade        Float?
+  feedback     String?
+  submittedAt  DateTime @default(now())
+
+  assignment Assignment @relation(fields: [assignmentId], references: [id], onDelete: Cascade)
+  student    User       @relation(fields: [studentId], references: [id], onDelete: Cascade)
+
+  @@unique([assignmentId, studentId])
+}
+
+model RaporComponent {
+  id             String @id @default(uuid(7))
+  classSubjectId String
+  studentId      String
+  knowledgeScore Float?
+  skillScore     Float?
+  finalScore     Float?
+
+  classSubject ClassSubject @relation(fields: [classSubjectId], references: [id], onDelete: Cascade)
+  student      User         @relation(fields: [studentId], references: [id], onDelete: Cascade)
+
+  @@unique([classSubjectId, studentId])
+}
+
+model RaporFinal {
+  id                   String  @id @default(uuid(7))
+  studentId            String
+  academicYearId       String
+  attendanceSick       Int     @default(0)
+  attendancePermission Int     @default(0)
+  attendanceAlpha      Int     @default(0)
+  behaviorNote         String?
+  isLocked             Boolean @default(false)
+
+  student      User         @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  academicYear AcademicYear @relation(fields: [academicYearId], references: [id], onDelete: Cascade)
+
+  @@unique([studentId, academicYearId])
+}

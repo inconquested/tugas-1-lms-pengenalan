@@ -1,0 +1,11 @@
+[test]
+# Runs before any test file imports the Prisma client — re-points DATABASE_URL at the
+# session-mode pooler and registers the one-shot pool teardown. See tests/setup.ts.
+preload = ["./tests/setup.ts"]
+
+# NOTE: the per-test timeout is set on the CLI in the "test" package.json script
+# (`bun test --timeout 60000`), because this bun version does not honour a `timeout`
+# key here. These E2E tests each make many ~380ms round-trips to a remote pooler, so the
+# default 5s per-test budget is far too short — and a test killed mid-transaction leaks
+# its pooled connection, which then starves the following tests. Always run via
+# `bun run test` (or pass --timeout yourself).

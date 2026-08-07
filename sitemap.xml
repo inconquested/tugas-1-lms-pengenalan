@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  
+  <!-- ========================================== -->
+  <!-- PUBLIC & AUTHENTICATION ROUTES             -->
+  <!-- ========================================== -->
+  <url>
+    <loc>https://lms.sekolah.sch.id/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://lms.sekolah.sch.id/sign-in</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lms.sekolah.sch.id/sign-up</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- ========================================== -->
+  <!-- ADMIN PORTAL ROUTES                        -->
+  <!-- ========================================== -->
+  <url>
+    <loc>https://lms.sekolah.sch.id/admin</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://lms.sekolah.sch.id/admin/users</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lms.sekolah.sch.id/admin/subjects</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://lms.sekolah.sch.id/admin/academic-years</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://lms.sekolah.sch.id/admin/classes</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lms.sekolah.sch.id/admin/classes/[classId]</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://lms.sekolah.sch.id/admin/rapor</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lms.sekolah.sch.id/admin/rapor/[academicYearId]</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- ========================================== -->
+  <!-- GURU PORTAL ROUTES                         -->
+  <!-- ========================================== -->
+  <url>
+    <loc>https://lms.sekolah.sch.id/guru</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://lms.sekolah.sch.id/guru/classes</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://lms.sekolah.sch.id/guru/classes/join</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://lms.sekolah.sch.id/guru/classes/[classSubjectId]</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lms.sekolah.sch.id/guru/classes/[classSubjectId]/assignments</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lms.sekolah.sch.id/guru/classes/[classSubjectId]/assignments/create</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://lms.sekolah.sch.id/guru/classes/[classSubjectId]/assignments/[assignmentId]</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lms.sekolah.sch.id/guru/classes/[classSubjectId]/rapor-components</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lms.sekolah.sch.id/guru/homeroom/[classId]</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- ========================================== -->
+  <!-- SISWA PORTAL ROUTES                        -->
+  <!-- ========================================== -->
+  <url>
+    <loc>https://lms.sekolah.sch.id/siswa</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://lms.sekolah.sch.id/siswa/classes</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://lms.sekolah.sch.id/siswa/classes/join</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://lms.sekolah.sch.id/siswa/classes/[classSubjectId]</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lms.sekolah.sch.id/siswa/classes/[classSubjectId]/assignments/[assignmentId]</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lms.sekolah.sch.id/siswa/rapor</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lms.sekolah.sch.id/siswa/rapor/[academicYearId]</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+</urlset>
