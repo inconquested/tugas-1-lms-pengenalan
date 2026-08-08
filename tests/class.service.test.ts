@@ -55,13 +55,13 @@ describe("class.service — creation & reads", () => {
   test("createClassSubject mints a teacher join code; duplicate (class,subject) rejects", async () => {
     const cls = await h.klass();
     const subj = await h.subject();
-    const cs = await createClassSubject({ classId: cls.id, subjectId: subj.id });
+    const cs = await createClassSubject({ classId: cls.id, subjectId: subj.id, TimeStart: "07:00", TimeEnd: "08:30" });
     expect(cs.teacherJoinCode).toBeTruthy();
     expect(cs.teacherId).toBeNull();
 
     let code: string | undefined;
     try {
-      await createClassSubject({ classId: cls.id, subjectId: subj.id });
+      await createClassSubject({ classId: cls.id, subjectId: subj.id, TimeStart: "07:00", TimeEnd: "08:30" });
     } catch (e) {
       code = (e as { code?: string }).code;
     }
@@ -152,7 +152,7 @@ describe("class.service — claim flows", () => {
   test("claimSubjectByCode: valid claim, invalid code, and double-claim", async () => {
     const cls = await h.klass();
     const subj = await h.subject();
-    const cs = await createClassSubject({ classId: cls.id, subjectId: subj.id });
+    const cs = await createClassSubject({ classId: cls.id, subjectId: subj.id, TimeStart: "07:00", TimeEnd: "08:30" });
     const t1 = await h.teacher();
     const t2 = await h.teacher();
 

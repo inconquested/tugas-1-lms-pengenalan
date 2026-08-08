@@ -124,7 +124,13 @@ export function makeHarness() {
   ) {
     const classId = opts.classId ?? (await klass()).id;
     const subjectId = opts.subjectId ?? (await subject()).id;
-    return createClassSubject({ classId, subjectId, teacherId: opts.teacherId });
+    return createClassSubject({
+      classId,
+      subjectId,
+      teacherId: opts.teacherId,
+      TimeStart: "07:00",
+      TimeEnd: "08:30",
+    });
   }
 
   // Full graph: active year + subject + class + teacher-claimed class-subject + one

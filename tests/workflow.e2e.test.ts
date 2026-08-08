@@ -54,7 +54,7 @@ describe("end-to-end semester workflow", () => {
     // 2. Admin sets up a subject, a class, and the class-subject slot.
     const subject = h.trackSubject(await createSubject({ name: "Fisika", code: `FIS-${tag}` }));
     const cls = await createClass({ name: "XII IPA 1", academicYearId: ay.id });
-    const cs = await createClassSubject({ classId: cls.id, subjectId: subject.id });
+    const cs = await createClassSubject({ classId: cls.id, subjectId: subject.id, TimeStart: "07:00", TimeEnd: "08:30" });
 
     // 3. Teachers claim their roles by code.
     const claimedHomeroom = await claimHomeroomByCode(waliKelas.id, cls.homeroomJoinCode!);
@@ -143,7 +143,7 @@ describe("end-to-end semester workflow", () => {
     const ay = await createAcademicYear({ year: "2088/2089", semester: "GENAP" });
     const subject = h.trackSubject(await createSubject({ name: "Kimia", code: `KIM-${h.uid()}` }));
     const cls = await createClass({ name: "Cascade Class", academicYearId: ay.id });
-    const cs = await createClassSubject({ classId: cls.id, subjectId: subject.id });
+    const cs = await createClassSubject({ classId: cls.id, subjectId: subject.id, TimeStart: "07:00", TimeEnd: "08:30" });
     const student = await h.student();
     await enrollStudentByCode(student.id, cls.studentJoinCode!);
     const assignment = await createAssignment({ classSubjectId: cs.id, title: "Doomed", externalReferences: [] });

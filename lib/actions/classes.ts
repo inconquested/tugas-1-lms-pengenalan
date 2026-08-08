@@ -42,6 +42,8 @@ export async function createClassSubjectAction(
     classId,
     subjectId: str(formData.get("subjectId")),
     teacherId: str(formData.get("teacherId")),
+    TimeStart: str(formData.get("TimeStart")),
+    TimeEnd: str(formData.get("TimeEnd")),
   });
   if (!parsed.success) return fromZod(parsed.error);
   try {

@@ -131,6 +131,7 @@ export default async function AdminClassDetailPage({
             <thead>
               <tr>
                 <th scope="col">Mata Pelajaran</th>
+                <th scope="col">Jam</th>
                 <th scope="col">Guru</th>
                 <th scope="col">Kode Guru</th>
               </tr>
@@ -141,6 +142,9 @@ export default async function AdminClassDetailPage({
                   <th scope="row" className="font-medium">
                     {cs.subject.name}
                   </th>
+                  <td className="whitespace-nowrap tabular-nums">
+                    {cs.TimeStart}–{cs.TimeEnd}
+                  </td>
                   <td>
                     {cs.teacher ? (
                       cs.teacher.name
